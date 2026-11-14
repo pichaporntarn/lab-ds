@@ -1,0 +1,24 @@
+/* Imported by src/styles/index.css, which supplies the theme, variants and layer order. */
+
+/* Rules live in the components layer so utilities passed through className always win. */
+@layer components {
+  .ui-progress {
+    @apply flex flex-wrap gap-3;
+  }
+
+  .ui-progress-track {
+    @apply relative flex h-3 w-full items-center overflow-x-hidden rounded-full bg-muted;
+  }
+
+  .ui-progress-indicator {
+    @apply h-full bg-primary transition-all;
+  }
+
+  .ui-progress-label {
+    @apply text-sm font-medium;
+  }
+
+  .ui-progress-value {
+    @apply ml-auto text-sm text-muted-foreground tabular-nums;
+  }
+}

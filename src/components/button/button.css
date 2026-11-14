@@ -1,0 +1,82 @@
+/* Imported by src/styles/index.css, which supplies the theme, variants and layer order. */
+
+/*
+ * Rules live in the components layer so utilities passed through className
+ * always win. :where() keeps variant and size selectors at the same specificity
+ * as .ui-button, so source order decides conflicts: base, variants, sizes, states.
+ */
+@layer components {
+  .ui-button {
+    @apply inline-flex shrink-0 items-center justify-center rounded-4xl border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none;
+    @apply focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/30;
+    @apply active:not-aria-[haspopup]:translate-y-px;
+    @apply disabled:pointer-events-none disabled:opacity-50;
+    @apply [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4;
+  }
+
+  /* Variants */
+
+  .ui-button:where([data-variant="default"]) {
+    @apply bg-primary text-primary-foreground hover:bg-primary/80;
+  }
+
+  .ui-button:where([data-variant="outline"]) {
+    @apply border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:bg-transparent dark:hover:bg-input/30;
+  }
+
+  .ui-button:where([data-variant="secondary"]) {
+    @apply bg-secondary text-secondary-foreground hover:bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)] aria-expanded:bg-secondary aria-expanded:text-secondary-foreground;
+  }
+
+  .ui-button:where([data-variant="ghost"]) {
+    @apply hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50;
+  }
+
+  .ui-button:where([data-variant="destructive"]) {
+    @apply bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40;
+  }
+
+  .ui-button:where([data-variant="link"]) {
+    @apply text-primary underline-offset-4 hover:underline;
+  }
+
+  /* Sizes */
+
+  .ui-button:where([data-size="default"]) {
+    @apply h-9 gap-1.5 px-3 has-data-[icon=inline-end]:pr-2.5 has-data-[icon=inline-start]:pl-2.5;
+  }
+
+  .ui-button:where([data-size="xs"]) {
+    @apply h-6 gap-1 px-2.5 text-xs has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 [&_svg:not([class*='size-'])]:size-3;
+  }
+
+  .ui-button:where([data-size="sm"]) {
+    @apply h-8 gap-1 px-3 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2;
+  }
+
+  .ui-button:where([data-size="lg"]) {
+    @apply h-10 gap-1.5 px-4 has-data-[icon=inline-end]:pr-3 has-data-[icon=inline-start]:pl-3;
+  }
+
+  .ui-button:where([data-size="icon"]) {
+    @apply size-9;
+  }
+
+  .ui-button:where([data-size="icon-xs"]) {
+    @apply size-6 [&_svg:not([class*='size-'])]:size-3;
+  }
+
+  .ui-button:where([data-size="icon-sm"]) {
+    @apply size-8;
+  }
+
+  .ui-button:where([data-size="icon-lg"]) {
+    @apply size-10;
+  }
+
+  /* States that must beat every variant */
+
+  .ui-button {
+    @apply aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40;
+  }
+}

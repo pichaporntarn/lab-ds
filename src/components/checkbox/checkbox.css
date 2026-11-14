@@ -1,0 +1,17 @@
+/* Imported by src/styles/index.css, which supplies the theme, variants and layer order. */
+
+/* Rules live in the components layer so utilities passed through className always win. */
+@layer components {
+  .ui-checkbox {
+    @apply relative flex size-4 shrink-0 items-center justify-center rounded-[5px] border border-transparent bg-input/90 transition-shadow outline-none;
+    @apply after:absolute after:-inset-x-3 after:-inset-y-2;
+    @apply focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/30;
+    @apply disabled:cursor-not-allowed disabled:opacity-50;
+    @apply aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 aria-invalid:aria-checked:border-primary dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40;
+    @apply data-checked:border-primary data-checked:bg-primary data-checked:text-primary-foreground dark:data-checked:bg-primary;
+  }
+
+  .ui-checkbox-indicator {
+    @apply grid place-content-center text-current transition-none [&>svg]:size-3.5;
+  }
+}

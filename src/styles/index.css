@@ -1,0 +1,38 @@
+/* Entry for dist/styles.css. Consumers import "@your-scope/lab-ds/styles.css" once. */
+@import "tailwindcss" source(none);
+@import "tw-animate-css";
+/* shadcn's custom variants (data-open, data-checked, ...) used by the component styles. */
+@import "shadcn/tailwind.css";
+@import "./theme.css";
+
+/* Component styles. Each file puts its rules in @layer components, so utilities win. */
+@import "../components/avatar/avatar.css";
+@import "../components/badge/badge.css";
+@import "../components/button/button.css";
+@import "../components/checkbox/checkbox.css";
+@import "../components/dialog/dialog.css";
+@import "../components/input/input.css";
+@import "../components/label/label.css";
+@import "../components/product-card/product-card.css";
+@import "../components/progress/progress.css";
+@import "../components/select/select.css";
+@import "../components/switch/switch.css";
+
+/* Only scan library sources; stories and tests must not add classes to the shipped CSS. */
+@source "../components";
+@source not "../**/*.stories.tsx";
+@source not "../**/*.test.tsx";
+
+@custom-variant dark (&:is(.dark *));
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+}

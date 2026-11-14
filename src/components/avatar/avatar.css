@@ -1,0 +1,53 @@
+/* Imported by src/styles/index.css, which supplies the theme, variants and layer order. */
+
+/* Rules live in the components layer so utilities passed through className always win. */
+@layer components {
+  .ui-avatar {
+    @apply relative flex size-8 shrink-0 rounded-full select-none data-[size=lg]:size-10 data-[size=sm]:size-6;
+    @apply after:absolute after:inset-0 after:rounded-full after:border after:border-border after:mix-blend-darken dark:after:mix-blend-lighten;
+  }
+
+  .ui-avatar-image {
+    @apply aspect-square size-full rounded-full object-cover;
+  }
+
+  .ui-avatar-fallback {
+    @apply flex size-full items-center justify-center rounded-full bg-muted text-sm text-muted-foreground;
+  }
+
+  .ui-avatar[data-size="sm"] .ui-avatar-fallback {
+    @apply text-xs;
+  }
+
+  .ui-avatar-badge {
+    @apply absolute right-0 bottom-0 z-10 inline-flex items-center justify-center rounded-full bg-primary text-primary-foreground bg-blend-color ring-2 ring-background select-none;
+  }
+
+  .ui-avatar[data-size="sm"] .ui-avatar-badge {
+    @apply size-2 [&>svg]:hidden;
+  }
+
+  .ui-avatar[data-size="default"] .ui-avatar-badge {
+    @apply size-2.5 [&>svg]:size-2;
+  }
+
+  .ui-avatar[data-size="lg"] .ui-avatar-badge {
+    @apply size-3 [&>svg]:size-2;
+  }
+
+  .ui-avatar-group {
+    @apply flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:ring-background;
+  }
+
+  .ui-avatar-group-count {
+    @apply relative flex size-8 shrink-0 items-center justify-center rounded-full bg-muted text-sm text-muted-foreground ring-2 ring-background [&>svg]:size-4;
+  }
+
+  .ui-avatar-group:has([data-size="lg"]) .ui-avatar-group-count {
+    @apply size-10 [&>svg]:size-5;
+  }
+
+  .ui-avatar-group:has([data-size="sm"]) .ui-avatar-group-count {
+    @apply size-6 [&>svg]:size-3;
+  }
+}

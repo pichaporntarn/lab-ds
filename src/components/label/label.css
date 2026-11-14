@@ -1,0 +1,13 @@
+/* Imported by src/styles/index.css, which supplies the theme, variants and layer order. */
+
+/* Rules live in the components layer so utilities passed through className always win. */
+@layer components {
+  .ui-label {
+    @apply flex items-center gap-2 text-sm leading-none font-medium select-none;
+  }
+
+  /* A label placed after a disabled Checkbox or Switch. Base UI marks them with data-disabled. */
+  :where(.ui-checkbox, .ui-switch)[data-disabled] ~ .ui-label {
+    @apply cursor-not-allowed opacity-50;
+  }
+}

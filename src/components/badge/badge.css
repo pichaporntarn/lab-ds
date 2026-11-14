@@ -1,0 +1,51 @@
+/* Imported by src/styles/index.css, which supplies the theme, variants and layer order. */
+
+/*
+ * Rules live in the components layer so utilities passed through className
+ * always win. :where() keeps variant selectors at the same specificity as
+ * .ui-badge, so source order decides conflicts.
+ */
+@layer components {
+  .ui-badge {
+    @apply inline-flex h-5 w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-3xl border border-transparent px-2 py-0.5 text-xs font-medium whitespace-nowrap transition-all;
+    @apply focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50;
+    @apply has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5;
+    @apply [&>svg]:pointer-events-none [&>svg]:size-3!;
+  }
+
+  /* Variants */
+
+  .ui-badge:where([data-variant="default"]) {
+    @apply bg-primary text-primary-foreground [a]:hover:bg-primary/80;
+  }
+
+  .ui-badge:where([data-variant="secondary"]) {
+    @apply bg-secondary text-secondary-foreground [a]:hover:bg-secondary/80;
+  }
+
+  .ui-badge:where([data-variant="destructive"]) {
+    @apply bg-destructive/10 text-destructive focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:focus-visible:ring-destructive/40 [a]:hover:bg-destructive/20;
+  }
+
+  .ui-badge:where([data-variant="success"]) {
+    @apply bg-success/10 text-success focus-visible:ring-success/20 dark:bg-success/20 dark:focus-visible:ring-success/40 [a]:hover:bg-success/20;
+  }
+
+  .ui-badge:where([data-variant="outline"]) {
+    @apply border-border text-foreground [a]:hover:bg-muted [a]:hover:text-muted-foreground;
+  }
+
+  .ui-badge:where([data-variant="ghost"]) {
+    @apply hover:bg-muted hover:text-muted-foreground dark:hover:bg-muted/50;
+  }
+
+  .ui-badge:where([data-variant="link"]) {
+    @apply text-primary underline-offset-4 hover:underline;
+  }
+
+  /* States that must beat every variant */
+
+  .ui-badge {
+    @apply aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40;
+  }
+}

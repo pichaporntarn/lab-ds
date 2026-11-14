@@ -1,0 +1,47 @@
+/* Imported by src/styles/index.css, which supplies the theme, variants and layer order. */
+
+/* Rules live in the components layer so utilities passed through className always win. */
+@layer components {
+  .ui-product-card {
+    @apply flex flex-col gap-(--product-card-spacing) text-foreground [--product-card-spacing:--spacing(4)];
+  }
+
+  .ui-product-card-media {
+    @apply relative aspect-square overflow-hidden rounded-4xl bg-product-surface;
+  }
+
+  .ui-product-card-image {
+    /* Matches next/image `fill` in the app: the image covers the square media box. */
+    @apply absolute inset-0 size-full object-contain p-(--product-card-spacing);
+  }
+
+  .ui-product-card-body {
+    @apply flex flex-col gap-1;
+  }
+
+  .ui-product-card-brand {
+    @apply text-sm text-muted-foreground;
+  }
+
+  .ui-product-card-name {
+    @apply font-heading text-lg font-semibold;
+  }
+
+  .ui-product-card-price {
+    @apply text-base;
+  }
+
+  /* Sizes */
+
+  .ui-product-card:where([data-size="sm"]) {
+    @apply [--product-card-spacing:--spacing(3)];
+  }
+
+  .ui-product-card:where([data-size="sm"]) .ui-product-card-name {
+    @apply text-base;
+  }
+
+  .ui-product-card:where([data-size="sm"]) .ui-product-card-price {
+    @apply text-sm;
+  }
+}

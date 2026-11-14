@@ -1,0 +1,35 @@
+/* Imported by src/styles/index.css, which supplies the theme, variants and layer order. */
+
+/* Rules live in the components layer so utilities passed through className always win. */
+@layer components {
+  .ui-dialog-overlay {
+    @apply fixed inset-0 isolate z-50 bg-black/30 duration-100 supports-backdrop-filter:backdrop-blur-sm;
+    @apply data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0;
+  }
+
+  .ui-dialog-content {
+    @apply fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-6 rounded-4xl bg-popover p-6 text-sm text-popover-foreground shadow-xl ring-1 ring-foreground/5 duration-100 outline-none sm:max-w-md dark:ring-foreground/10;
+    @apply data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95;
+  }
+
+  /* A component class, not a utility, so the Button hover background still applies. */
+  .ui-dialog-close {
+    @apply absolute top-4 right-4 bg-secondary;
+  }
+
+  .ui-dialog-header {
+    @apply flex flex-col gap-1.5;
+  }
+
+  .ui-dialog-footer {
+    @apply flex flex-col-reverse gap-2 sm:flex-row sm:justify-end;
+  }
+
+  .ui-dialog-title {
+    @apply font-heading text-base leading-none font-medium;
+  }
+
+  .ui-dialog-description {
+    @apply text-sm text-muted-foreground *:[a]:underline *:[a]:underline-offset-3 *:[a]:hover:text-foreground;
+  }
+}

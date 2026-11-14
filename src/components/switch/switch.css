@@ -1,0 +1,28 @@
+/* Imported by src/styles/index.css, which supplies the theme, variants and layer order. */
+
+/* Rules live in the components layer so utilities passed through className always win. */
+@layer components {
+  .ui-switch {
+    @apply relative inline-flex shrink-0 items-center rounded-full border-2 transition-all outline-none;
+    @apply after:absolute after:-inset-x-3 after:-inset-y-2;
+    @apply focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/30;
+    @apply aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40;
+    @apply data-[size=default]:h-5 data-[size=default]:w-11 data-[size=sm]:h-4 data-[size=sm]:w-7;
+    @apply data-checked:border-primary data-checked:bg-primary data-unchecked:border-transparent data-unchecked:bg-input/90;
+    @apply data-disabled:cursor-not-allowed data-disabled:opacity-50;
+  }
+
+  .ui-switch-thumb {
+    @apply pointer-events-none block rounded-full bg-background shadow-sm ring-0 transition-transform not-dark:bg-clip-padding;
+    @apply data-checked:translate-x-[calc(100%-8px)] data-unchecked:translate-x-0;
+    @apply dark:data-checked:bg-primary-foreground dark:data-unchecked:bg-foreground;
+  }
+
+  .ui-switch[data-size="default"] .ui-switch-thumb {
+    @apply h-4 w-6;
+  }
+
+  .ui-switch[data-size="sm"] .ui-switch-thumb {
+    @apply h-3 w-4;
+  }
+}
