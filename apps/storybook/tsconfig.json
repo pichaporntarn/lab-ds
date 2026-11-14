@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@your-scope/lab-ds": ["../../src/index.ts"]
+    },
+    "types": ["node", "vitest/globals"]
+  },
+  "include": ["stories", ".storybook", "*.ts"]
+}

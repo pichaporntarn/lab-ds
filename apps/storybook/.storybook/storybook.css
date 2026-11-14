@@ -1,0 +1,14 @@
+/*
+ * The library stylesheet (same source as dist/styles.css), plus a scan of this
+ * app's stories so layout utilities used only in stories (flex, gap-3, ...) get
+ * generated here without leaking into the shipped CSS.
+ */
+@import "../../../src/styles/index.css";
+@source "../stories";
+
+/* Fonts are consumer-provided (next/font in real apps); Storybook uses system fonts. */
+:root {
+  --font-sans: ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-sans);
+  --font-geist-mono: ui-monospace, monospace;
+}

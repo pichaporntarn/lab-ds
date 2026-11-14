@@ -15,11 +15,11 @@ The primary consumers are **Next.js App Router** apps, so every published module
 
 ## Stack
 
-- **pnpm**, version pinned by `packageManager` in `package.json` (single package at repo root, not a monorepo). Dependency build scripts are blocked unless listed under `allowBuilds` in `pnpm-workspace.yaml` (currently `esbuild`, `@parcel/watcher`).
+- **pnpm**, version pinned by `packageManager` in `package.json` (the library is the workspace root package; `apps/*` holds private, unpublished apps such as `apps/storybook`). Dependency build scripts are blocked unless listed under `allowBuilds` in `pnpm-workspace.yaml` (currently `esbuild`, `@parcel/watcher`).
 - **React** as a peer (`^18 || ^19`) + **TypeScript** (strict). TS is pinned to `~6.0` because `typescript-eslint` doesn't support newer versions yet. Don't bump it past what `typescript-eslint` allows.
 - **Tailwind CSS v4**, CSS-first config (`@theme` in CSS, no `tailwind.config.js`)
 - **tsup** for the JS build (ESM + CJS + `.d.ts`/`.d.cts`)
-- **Storybook** (`@storybook/react-vite`) for docs and playground
+- **Storybook** (`@storybook/react-vite`, with the docs, a11y, vitest and mcp addons) in `apps/storybook`, for docs, playground and browser tests of each story
 - **Vitest** + React Testing Library (jsdom, globals enabled) for tests
 - **ESLint + Prettier** for lint and format (`prettier-plugin-tailwindcss` sorts classes in `cn()` calls and `@apply` rules)
 - **Manual releases** (no Changesets or semantic-release). There's no LICENSE yet; one is needed before the first public release.
@@ -28,7 +28,7 @@ The primary consumers are **Next.js App Router** apps, so every published module
 
 ```bash
 pnpm install
-pnpm storybook          # dev: Storybook on http://localhost:6006
+pnpm storybook          # dev: Storybook (apps/storybook) on http://localhost:6006
 pnpm build              # tsup (JS + types) + Tailwind CLI (dist/styles.css)
 pnpm typecheck          # tsc --noEmit
 pnpm lint               # eslint .
@@ -37,7 +37,8 @@ pnpm test               # vitest run
 pnpm test:watch         # vitest
 pnpm vitest run src/components/button/button.test.tsx   # single file
 pnpm vitest run -t "applies variant and size"            # single test by name
-pnpm build-storybook    # static Storybook into storybook-static/
+pnpm build-storybook    # static Storybook into apps/storybook/storybook-static/
+pnpm test:storybook     # run every story as a headless Chromium test (play functions, a11y)
 ```
 
 Release (manual, from a clean `main`). `prepublishOnly` runs lint, typecheck, test and build automatically:
@@ -59,16 +60,18 @@ src/
     <name>.tsx             # markup and typed props; no Tailwind classes, no CSS import
     <name>.css             # all styling, written with @apply; imported by styles/index.css
     <name>.test.tsx
-    <name>.stories.tsx     # never part of the build
     index.ts
   styles/
     index.css              # entry for dist/styles.css: Tailwind, shadcn variants, theme, component CSS, base layer
     theme.css              # design tokens: CSS variables + @theme mapping, light/dark
   test/setup.ts            # jest-dom matchers; excluded from the build
-.storybook/                # imports src/styles/index.css and adds @tailwindcss/vite
+apps/storybook/             # private workspace app, never published
+  .storybook/main.ts       # aliases @your-scope/lab-ds to src/index.ts so edits hot-reload without a build
+  .storybook/storybook.css # imports src/styles/index.css and adds @source for the stories
+  stories/<name>.stories.tsx
 ```
 
-`src/components/button/` is the reference component. Copy its file layout, data-attribute pattern, test style and story style for new components.
+`src/components/button/` is the reference component. Copy its file layout, data-attribute pattern, test style and story style (`apps/storybook/stories/button.stories.tsx`) for new components.
 
 ### Two build outputs
 
@@ -108,7 +111,7 @@ Fonts are consumer-provided: `--font-sans`, `--font-heading` and `--font-geist-m
   - Rewrite `@/` path aliases to **relative imports**. tsup doesn't rewrite TS path aliases, so they break in the published output. (The `@/*` path in `tsconfig.json` exists only so the shadcn CLI knows where to write files. ESLint rejects `@/` imports.)
   - Move its Tailwind classes into `<name>.css` and add the `@import` line to `src/styles/index.css`.
   - Move it into `src/components/<name>/`, add `"use client"` if needed, and export it from `src/index.ts`.
-  - Add a story and a test.
+  - Add a test, and a story in `apps/storybook/stories/<name>.stories.tsx`. Stories import from `@your-scope/lab-ds`, like a consumer, and cover every prop and state (see the Button story).
 - Add `data-slot="<name>"` on the root and spread `...props` onto it. Merge `className` with `cn("ui-<name>", className)` so consumer classes apply (the Button test checks this).
 - Export each component's props, size and variant types (`ButtonProps`, `ButtonSize`, `ButtonVariant`) alongside it.
 - Removing or renaming anything exported from `src/index.ts`, or changing a token name, is a **breaking change** (major version).
